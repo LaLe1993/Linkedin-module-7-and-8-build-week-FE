@@ -27,7 +27,7 @@ class Posts extends Component {
   async editPost() {
     const postText = {
       method: "PUT",
-      url: `https://be-linkedin.herokuapp.com/posts/${this.state.posts._id}`,
+      url: `http://localhost:3333/posts/${this.state.posts._id}`,
       headers: {
         Authorization: "Basic " + btoa("user7:3UU5dYFvenRuRP7E"),
       },
@@ -36,7 +36,7 @@ class Posts extends Component {
 
     const postFile = {
       method: "POST",
-      url: `https://be-linkedin.herokuapp.com/posts/${this.state.posts._id}`,
+      url: `http://localhost:3333/posts/${this.state.posts._id}`,
       headers: {
         Authorization: "Basic " + btoa("user7:3UU5dYFvenRuRP7E"),
         user: "user2",

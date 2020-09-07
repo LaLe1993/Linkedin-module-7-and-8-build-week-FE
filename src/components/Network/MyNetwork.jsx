@@ -18,7 +18,7 @@ class MyNetwork extends React.Component {
   }
 
   componentDidMount = async () => {
-    let response = await fetch(`https://be-linkedin.herokuapp.com/profile`, {
+    let response = await fetch(`http://localhost:3333/profile`, {
       method: "GET",
       headers: new Headers({
         Authorization: "Basic dXNlcjE4OlEyejVWN2hFRlU2SktSckU=",

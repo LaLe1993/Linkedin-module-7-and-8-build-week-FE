@@ -35,7 +35,7 @@ class LinkedInForm extends React.Component {
   };
   sendData = async (values) => {
     let response = await fetch(
-      "https://be-linkedin.herokuapp.com/profile/user1/experience",
+      "http://localhost:3333/profile/user1/experience",
       {
         method: "POST",
         body: JSON.stringify(values),

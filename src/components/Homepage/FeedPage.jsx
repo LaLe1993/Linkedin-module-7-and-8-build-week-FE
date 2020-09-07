@@ -40,8 +40,8 @@ export default class Homepage extends Component {
     let data1 = { text: this.state.postsText };
     let postData = {
       method: "POST",
-      url: `https://be-linkedin.herokuapp.com/posts`,
-      //url: `http://localhost:3333/posts`,
+      // url: `https://be-linkedin.herokuapp.com/posts`,
+      url: `http://localhost:3333/posts`,
       headers: {
         Authorization: "Basic " + btoa("user7:3UU5dYFvenRuRP7E"),
         user: "user1",
@@ -53,8 +53,8 @@ export default class Homepage extends Component {
 
     let inputFile = {
       method: "POST",
-      // url: await `http://localhost:3333/posts/${data.data}`,
-      url: await `https://be-linkedin.herokuapp.com/posts/${data.data}`,
+      url: await `http://localhost:3333/posts/${data.data}`,
+      // url: await `https://be-linkedin.herokuapp.com/posts/${data.data}`,
       headers: {
         Authorization: "Basic " + btoa("user7:3UU5dYFvenRuRP7E"),
         "Access-Control-Allow-Origin": "http://127.0.0.1:3000/",
@@ -71,7 +71,8 @@ export default class Homepage extends Component {
     console.log(this.props.match.params.id);
     let response = {
       method: "GET",
-      url: `https://be-linkedin.herokuapp.com/posts`,
+      url: await `http://localhost:3333/posts`,
+      //  url: `https://be-linkedin.herokuapp.com/posts`,
       headers: {
         Authorization: "Basic " + btoa("user7:3UU5dYFvenRuRP7E"),
       },
@@ -96,7 +97,8 @@ export default class Homepage extends Component {
     this.setState({ loading: true });
     const postText = {
       method: "PUT",
-      url: `https://be-linkedin.herokuapp.com/posts/${id}`,
+      // url: `https://be-linkedin.herokuapp.com/posts/${id}`,
+      url: `http://localhost:3333/posts/${id}`,
       headers: {
         Authorization: "Basic " + btoa("user7:3UU5dYFvenRuRP7E"),
       },
@@ -122,15 +124,12 @@ export default class Homepage extends Component {
   //
   deletePost = async (id) => {
     this.setState({ loading: true });
-    let response = await fetch(
-      `https://be-linkedin.herokuapp.com/posts/${id}`,
-      {
-        method: "DELETE",
-        headers: new Headers({
-          Authorization: "Basic " + btoa("user7:3UU5dYFvenRuRP7E"),
-        }),
-      }
-    );
+    let response = await fetch(`http://localhost:3333/posts/${id}`, {
+      method: "DELETE",
+      headers: new Headers({
+        Authorization: "Basic " + btoa("user7:3UU5dYFvenRuRP7E"),
+      }),
+    });
     if (response.ok) {
       this.fetchData();
       // alert("Post deleted Sucessfully");
