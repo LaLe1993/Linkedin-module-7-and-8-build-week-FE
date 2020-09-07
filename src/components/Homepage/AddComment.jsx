@@ -46,7 +46,7 @@ export class AddComment extends Component {
     this.setState({ comments });
   };
   sendComment = async () => {
-    let response = await fetch("https://be-linkedin.herokuapp.com/comments", {
+    let response = await fetch("http://localhost:3333/comments", {
       method: "POST",
       body: JSON.stringify(this.state.comments),
       headers: new Headers({

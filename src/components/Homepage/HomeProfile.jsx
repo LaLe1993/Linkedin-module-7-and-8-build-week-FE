@@ -17,16 +17,13 @@ export default class homeprofile extends Component {
     return btoa(binstr);
   }
   componentDidMount = async () => {
-    let response = await fetch(
-      "https://be-linkedin.herokuapp.com/profile/user1",
-      {
-        method: "GET",
-        headers: new Headers({
-          Authorization: "Basic " + btoa("user7:3UU5dYFvenRuRP7E"),
-          "Content-type": "application/json",
-        }),
-      }
-    );
+    let response = await fetch("http://localhost:3333/profile/user1", {
+      method: "GET",
+      headers: new Headers({
+        Authorization: "Basic " + btoa("user7:3UU5dYFvenRuRP7E"),
+        "Content-type": "application/json",
+      }),
+    });
     let parsedJson = await response.json();
     let user = parsedJson[0];
     const base64 = this.bufferToBase64(user.image.data);
