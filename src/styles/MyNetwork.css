@@ -1,0 +1,39 @@
+.myNetworkUsersCol .col {
+    padding: 0px 5px;
+    margin-bottom: 10px;
+}
+
+.myNetworkUsersCol .col .card a{
+    margin-top: auto;
+}
+
+.myNetworkUsersCol .col .card button{
+    width: 100%;
+    font-size: 14px;
+    font-weight: 700;
+    border: 1px solid #0073b1;
+    color:#0073b1;
+    border-radius: 2px;
+}
+
+.myNetworkUsersCol .col .card button:hover{
+    border-color: white;
+    color: white;
+    background-color: #0073b1;
+}
+
+.networkCards img{
+    width: 70%;
+    height: 130px;
+    border-radius: 50%;
+    margin: 10px auto;
+}
+.networkCards .card-body{
+    font-size: 12px !important;
+}
+.networkCards .card-title {
+    font-size: 16px !important;
+}
+.networkContainer{
+    margin-top: 60px;
+}

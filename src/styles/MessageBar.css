@@ -1,0 +1,117 @@
+#message {
+  position: fixed;
+  right: 25px;
+  width: 300px;
+}
+#messagebar {
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  background-color: #283e4a;
+  color: white;
+  border-radius: 2px;
+}
+#messagebar #icons {
+  display: flex;
+  font-size: 20px;
+}
+#messagebar #header {
+  display: flex;
+}
+#messagebar #header p:hover {
+  cursor: pointer;
+}
+#messagebar > div p {
+  padding: 13px 10px;
+}
+#messagebar #icons p {
+  padding: 8px 10px;
+}
+#message #connections {
+  background-color: white;
+
+  margin-top: -5px;
+  margin-bottom: -5px;
+  height: 250px;
+}
+#message #connections #connection {
+  display: flex;
+  margin: 5px;
+}
+#message #connections #connection img {
+  height: 40px;
+  width: 40px;
+  padding: 5px;
+  border-radius: 40px;
+}
+#message #connections #connection a {
+  padding: 7px 0px;
+}
+#message #connections #connection a:hover {
+  cursor: pointer;
+}
+#chatbox {
+  position: fixed;
+  bottom: 0px;
+  right: 350px;
+  width: 300px;
+}
+#chatbox #header {
+  height: 50px;
+  display: flex;
+  justify-content: space-between;
+  background-color: #283e4a;
+  color: white;
+  border-radius: 2px;
+}
+#chatbox #header #name {
+  display: flex;
+  padding: 15px;
+}
+#chatbox #header #icons {
+  display: flex;
+  padding: 10px 15px;
+}
+#chatbox #header #icons p {
+  padding: 0 5px;
+  font-size: 20px;
+}
+#chatbox #header #icons p:hover {
+  cursor: pointer;
+}
+#chatbox #chat {
+  height: 250px;
+  background-color: white;
+  position: relative;
+}
+#chatbox #chat #input {
+  height: 40px;
+  width: 280px;
+  padding: 0px 10px;
+  padding-top: 5px;
+  margin-left: 10px;
+  display: flex;
+  position: fixed;
+  bottom: 10px;
+  border: 2px solid black;
+  border-radius: 20px;
+}
+#chatbox #chat #input input {
+  font-size: 14px;
+  height: 26px;
+  width: 250px;
+  border: none;
+}
+#chatbox #chat #input p {
+  font-size: 18px;
+  margin-top: -2px;
+}
+#chatbox #chat #input input:focus {
+  outline: none;
+}
+#chatbox #chat #messages {
+  height: 200px;
+  width: 280px;
+  margin-left: 20px;
+  overflow: auto;
+}
