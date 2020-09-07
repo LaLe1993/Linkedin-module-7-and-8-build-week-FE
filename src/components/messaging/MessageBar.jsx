@@ -4,12 +4,14 @@ import { TiEdit } from "react-icons/ti";
 import { BsThreeDots } from "react-icons/bs";
 import { MdClose, MdSend } from "react-icons/md";
 import io from "socket.io-client";
+import { GoPrimitiveDot } from "react-icons/go";
 export class MessageBar extends Component {
   socket = null;
   constructor(props) {
     super(props);
     this.state = {
       connections: [],
+      liveConnections: "",
       bottom: 0,
       showChatbox: false,
       recipientName: "",
@@ -31,7 +33,7 @@ export class MessageBar extends Component {
     return btoa(binstr);
   }
   componentDidMount = async () => {
-    let response = await fetch(`https://be-linkedin.herokuapp.com/profile`, {
+    let response = await fetch(`http://localhost:3333/profile`, {
       method: "GET",
       headers: new Headers({
         Authorization: "Basic dXNlcjE4OlEyejVWN2hFRlU2SktSckU=",
@@ -43,7 +45,11 @@ export class MessageBar extends Component {
       const base64 = this.bufferToBase64(element.image.data);
       element.image = base64;
     });
-    this.setState({ connections: parsedJson });
+    this.setState({
+      connections: parsedJson,
+      liveConnections: this.props.liveConnections,
+    });
+    /*
     let messagesResponse = await fetch(
       "https://striveschool-test.herokuapp.com/api/messages/user18"
     );
@@ -69,6 +75,7 @@ export class MessageBar extends Component {
         check: false,
       })
     );
+    */
   };
 
   handleMessaging = () => {
@@ -124,6 +131,14 @@ export class MessageBar extends Component {
                   <a onClick={() => this.openChatbox(connection.name)}>
                     {connection.name}
                   </a>
+                  {this.state.liveConnections.find(
+                    (liveconnection) =>
+                      liveconnection.username === connection.username
+                  ) ? (
+                    <p id="liveIndicator">
+                      <GoPrimitiveDot />
+                    </p>
+                  ) : null}
                 </div>
               );
             })}

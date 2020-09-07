@@ -115,3 +115,9 @@
   margin-left: 20px;
   overflow: auto;
 }
+#message #connections #connection #liveIndicator {
+  color: green;
+  margin: 0px !important;
+
+  padding-top: 6px;
+}

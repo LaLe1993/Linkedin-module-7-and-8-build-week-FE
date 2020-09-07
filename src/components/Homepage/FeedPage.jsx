@@ -12,6 +12,7 @@ import { GrCamera } from "react-icons/gr";
 import { AiOutlineFileText } from "react-icons/ai";
 import Posts from "./Posts";
 import MessageBar from "../messaging/MessageBar";
+import io from "socket.io-client";
 export default class Homepage extends Component {
   state = {
     showModal: false,
@@ -21,9 +22,23 @@ export default class Homepage extends Component {
     inputFile: null,
     username: "user1",
     loading: true,
+    users: "",
   };
   componentDidMount() {
     this.fetchData();
+    const connOpt = {
+      transports: ["websocket"],
+    };
+    this.socket = io("http://localhost:3007", connOpt);
+    this.socket.on("connect", () => {
+      this.socket.emit("info", {
+        username: this.state.username,
+      });
+    });
+    this.socket.on("updateUsers", (users) => {
+      this.setState({ users });
+      console.log(users);
+    });
   }
   //
   bufferToBase64(buf) {
@@ -228,7 +243,7 @@ export default class Homepage extends Component {
             </Col>
           </Row>
         </Container>
-        <MessageBar />
+        <MessageBar liveConnections={this.state.users} />
       </>
     );
   }
