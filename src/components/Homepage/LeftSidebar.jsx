@@ -12,7 +12,7 @@ import '../../styles/HomePage.css'
 
 
 const Leftsidebar = () => (
-  <div className="leftSidebar mt-2 home leftSidebarShadow">
+  <div className="leftSidebar home leftSidebarShadow">
     <div>
       <Row className="mr-auto d-flex flex-row ">
         <Col xs={10} className="pl-4 mt-2 left" >
