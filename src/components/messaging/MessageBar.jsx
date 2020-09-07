@@ -11,7 +11,7 @@ export class MessageBar extends Component {
     super(props);
     this.state = {
       connections: [],
-      liveConnections: "",
+      liveConnections: [],
       bottom: 0,
       showChatbox: false,
       recipientName: "",
@@ -45,10 +45,12 @@ export class MessageBar extends Component {
       const base64 = this.bufferToBase64(element.image.data);
       element.image = base64;
     });
-    this.setState({
-      connections: parsedJson,
-      liveConnections: this.props.liveConnections,
-    });
+    setTimeout(() => {
+      this.setState({
+        liveConnections: this.props.liveConnections,
+        connections: parsedJson,
+      });
+    }, 1000);
     /*
     let messagesResponse = await fetch(
       "https://striveschool-test.herokuapp.com/api/messages/user18"
@@ -131,7 +133,8 @@ export class MessageBar extends Component {
                   <a onClick={() => this.openChatbox(connection.name)}>
                     {connection.name}
                   </a>
-                  {this.state.liveConnections.find(
+                  {this.state.liveConnections.length > 0 &&
+                  this.state.liveConnections.find(
                     (liveconnection) =>
                       liveconnection.username === connection.username
                   ) ? (

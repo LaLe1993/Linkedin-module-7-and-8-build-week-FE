@@ -3,7 +3,6 @@ import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import axios from "axios";
 import { createBrowserHistory } from "history";
 
-
 export default class signin extends Component {
   state = {
     username: "",
@@ -28,7 +27,21 @@ export default class signin extends Component {
     this.setState({ users: users.data });
     console.log(users);
   }
-
+  loginHandler = async () => {
+    let userInfo = {
+      email: this.state.username,
+      password: this.state.password,
+    };
+    let response = await fetch("http://localhost:3333/user/signIn", {
+      method: "POST",
+      credentials: "include",
+      body: JSON.stringify(userInfo),
+      headers: new Headers({
+        "content-Type": "application/json",
+      }),
+    });
+    this.props.history.push("/feed");
+  };
   render() {
     return (
       <Container>
@@ -58,11 +71,11 @@ export default class signin extends Component {
                   this.state.users.map((element) => {
                     if (e.target.value.length > 2) {
                       if (element.name === e.target.value) {
-                        this.setState({ uValid: true,});
+                        this.setState({ uValid: true });
                         console.log(this.state.uInvalid);
-                      } 
+                      }
                     } else {
-                      this.setState({ uValid: false,});
+                      this.setState({ uValid: false });
                     }
                   });
                   this.setState({ username: e.target.value });
@@ -79,12 +92,12 @@ export default class signin extends Component {
                   this.state.users.map((element) => {
                     if (e.target.value.length > 2) {
                       if (element.surname === e.target.value) {
-                        this.setState({ pValid : true});
+                        this.setState({ pValid: true });
                         console.log(this.state.pValid);
-                      } 
+                      }
                     } else {
-                      this.setState({ pValid: null, });
-                      console.log(this.state.pValid)
+                      this.setState({ pValid: null });
+                      console.log(this.state.pValid);
                     }
                   });
 
@@ -97,21 +110,7 @@ export default class signin extends Component {
             <Button
               className="w-100"
               variant="primary"
-              onClick={() => {
-                this.state.users.map((element) => {
-                  let ch = false;
-                  if (
-                    element.name === this.state.username &&
-                    element.surname === this.state.password
-                  ) {
-                    ch = true;
-                  }
-                  if (ch) {
-                    this.props.history.push(`/feed/${element.username}`);
-                  } else {
-                  }
-                });
-              }}
+              onClick={this.loginHandler}
             >
               Sign in
             </Button>

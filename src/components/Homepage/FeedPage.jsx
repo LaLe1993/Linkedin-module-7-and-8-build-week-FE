@@ -13,7 +13,21 @@ import { AiOutlineFileText } from "react-icons/ai";
 import Posts from "./Posts";
 import MessageBar from "../messaging/MessageBar";
 import io from "socket.io-client";
-export default class Homepage extends Component {
+import { connect } from "react-redux";
+
+//redux part
+const mapDispatchToProps = (dispatch) => {
+  return {
+    loadUser: (user) => {
+      dispatch({
+        type: "LOAD_USER",
+        payload: user,
+      });
+    },
+  };
+};
+
+class Homepage extends Component {
   state = {
     showModal: false,
     user: [],
@@ -24,8 +38,18 @@ export default class Homepage extends Component {
     loading: true,
     users: "",
   };
-  componentDidMount() {
+  componentDidMount = async () => {
+    //fetch posts
     this.fetchData();
+    // fetch user info
+    let response = await fetch("http://localhost:3333/user", {
+      method: "GET",
+      credentials: "include",
+    });
+    let parsedResponse = await response.json();
+    console.log("user", parsedResponse);
+    this.props.loadUser(parsedResponse);
+    //scket connection
     const connOpt = {
       transports: ["websocket"],
     };
@@ -39,7 +63,7 @@ export default class Homepage extends Component {
       this.setState({ users });
       console.log(users);
     });
-  }
+  };
   //
   bufferToBase64(buf) {
     var binstr = Array.prototype.map
@@ -248,3 +272,5 @@ export default class Homepage extends Component {
     );
   }
 }
+
+export default connect(null, mapDispatchToProps)(Homepage);
