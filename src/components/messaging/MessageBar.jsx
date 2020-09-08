@@ -5,6 +5,9 @@ import { BsThreeDots } from "react-icons/bs";
 import { MdClose, MdSend } from "react-icons/md";
 import io from "socket.io-client";
 import { GoPrimitiveDot } from "react-icons/go";
+import { connect } from "react-redux";
+
+const mapStateToProps = (state) => state;
 export class MessageBar extends Component {
   socket = null;
   constructor(props) {
@@ -15,8 +18,8 @@ export class MessageBar extends Component {
       bottom: 0,
       showChatbox: false,
       recipientName: "",
-      senderUsername: "user18",
-      recipientUsername: "user20",
+      senderUsername: "",
+      recipientUsername: "",
       message: "",
       messages: [],
       check: true,
@@ -33,7 +36,7 @@ export class MessageBar extends Component {
     return btoa(binstr);
   }
   componentDidMount = async () => {
-    let response = await fetch(`http://localhost:3333/profile`, {
+    let response = await fetch(`http://localhost:3003/profile`, {
       method: "GET",
       headers: new Headers({
         Authorization: "Basic dXNlcjE4OlEyejVWN2hFRlU2SktSckU=",
@@ -45,39 +48,28 @@ export class MessageBar extends Component {
       const base64 = this.bufferToBase64(element.image.data);
       element.image = base64;
     });
+    console.log(this.props.user.username);
+    let filteredConnections = parsedJson.filter(
+      (user) => user.username !== this.props.user.username
+    );
     setTimeout(() => {
       this.setState({
         liveConnections: this.props.liveConnections,
-        connections: parsedJson,
+        connections: filteredConnections,
+        senderUsername: this.props.user.username,
+        messages: this.props.msgs,
       });
     }, 1000);
-    /*
-    let messagesResponse = await fetch(
-      "https://striveschool-test.herokuapp.com/api/messages/user18"
-    );
-    let messages = await messagesResponse.json();
-    console.log(messages);
-    this.setState({ messages });
-    // socket part
-    const connOpt = {
-      transports: ["websocket"],
-    };
-    // this.socket = io("https://striveschool-api.herokuapp.com/", connOpt);
-    this.socket = io("https://striveschool.herokuapp.com/", connOpt);
-    this.socket.on("connect", () => {
-      console.log("connected!");
-      alert("connected");
-    });
-    this.socket.emit("setUsername", {
-      username: this.state.senderUsername,
-    });
-    this.socket.on("chatmessage", (msg) =>
-      this.setState({
-        messages: this.state.messages.concat(msg),
-        check: false,
-      })
-    );
-    */
+  };
+  componentDidUpdate = async (prevProps) => {
+    if (
+      prevProps.liveConnections.length !== this.props.liveConnections.length
+    ) {
+      this.setState({ liveConnections: this.props.liveConnections });
+    }
+    if (prevProps.msgs.length !== this.props.msgs.length) {
+      this.setState({ messages: this.props.msgs });
+    }
   };
 
   handleMessaging = () => {
@@ -87,8 +79,12 @@ export class MessageBar extends Component {
       this.setState({ bottom: 0 });
     }
   };
-  openChatbox = (name) => {
-    this.setState({ showChatbox: true, recipientName: name });
+  openChatbox = (user) => {
+    this.setState({
+      showChatbox: true,
+      recipientName: user.name,
+      recipientUsername: user.username,
+    });
   };
   closeChatbox = () => {
     this.setState({ showChatbox: false, recipientName: "" });
@@ -96,15 +92,14 @@ export class MessageBar extends Component {
   updateMessage = (e) => {
     this.setState({ message: e.currentTarget.value });
   };
-  sendMessage = (e) => {
+  sendMessageHandler = (e) => {
     e.preventDefault();
     if (this.state.message !== "") {
-      console.log("hello");
-      this.socket.emit("chatmessage", {
-        //  from:this.state.senderUsername,
-        to: this.state.recipientUsername,
-        text: this.state.message,
-      });
+      this.props.sendMessageFn(
+        this.state.recipientUsername,
+        this.state.message
+      );
+
       this.setState({ message: "" });
     }
   };
@@ -130,7 +125,7 @@ export class MessageBar extends Component {
                     src={`data:image/jpeg;base64,${connection.image}`}
                     alt="image"
                   />
-                  <a onClick={() => this.openChatbox(connection.name)}>
+                  <a onClick={() => this.openChatbox(connection)}>
                     {connection.name}
                   </a>
                   {this.state.liveConnections.length > 0 &&
@@ -165,8 +160,8 @@ export class MessageBar extends Component {
                     <p
                       className={
                         message.from === this.state.senderUsername
-                          ? "text-right"
-                          : "text-left"
+                          ? "textright"
+                          : "textleft"
                       }
                     >
                       {message.text}
@@ -180,7 +175,7 @@ export class MessageBar extends Component {
                   value={this.state.message}
                   onChange={this.updateMessage}
                 />
-                <p onClick={this.sendMessage}>{<MdSend />}</p>
+                <p onClick={this.sendMessageHandler}>{<MdSend />}</p>
               </div>
             </div>
           </div>
@@ -190,4 +185,4 @@ export class MessageBar extends Component {
   }
 }
 
-export default MessageBar;
+export default connect(mapStateToProps)(MessageBar);

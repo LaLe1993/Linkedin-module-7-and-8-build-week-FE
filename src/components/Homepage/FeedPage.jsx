@@ -16,6 +16,8 @@ import io from "socket.io-client";
 import { connect } from "react-redux";
 
 //redux part
+
+const mapStateToProps = (state) => state;
 const mapDispatchToProps = (dispatch) => {
   return {
     loadUser: (user) => {
@@ -34,9 +36,10 @@ class Homepage extends Component {
     posts: [],
     postsText: "",
     inputFile: null,
-    username: "user1",
+    username: "",
     loading: true,
     users: "",
+    msgs: [],
   };
   componentDidMount = async () => {
     //fetch posts
@@ -49,19 +52,27 @@ class Homepage extends Component {
     let parsedResponse = await response.json();
     console.log("user", parsedResponse);
     this.props.loadUser(parsedResponse);
+    this.setState({ username: this.props.user.username });
     //scket connection
     const connOpt = {
       transports: ["websocket"],
     };
     this.socket = io("http://localhost:3007", connOpt);
     this.socket.on("connect", () => {
-      this.socket.emit("info", {
+      this.socket.emit("connectinfo", {
         username: this.state.username,
       });
     });
     this.socket.on("updateUsers", (users) => {
       this.setState({ users });
-      console.log(users);
+    });
+    this.socket.on("userAfterDC", (users) => {
+      console.log("userdc", users);
+      this.setState({ users });
+    });
+    this.socket.on("message", (msg) => {
+      console.log(msg);
+      this.setState({ msgs: this.state.msgs.concat(msg) });
     });
   };
   //
@@ -73,6 +84,14 @@ class Homepage extends Component {
       .join("");
     return btoa(binstr);
   }
+  sendMessage = (recipientUsername, message) => {
+    this.socket.emit("chatmessage", {
+      from: this.props.user.username,
+      text: message,
+      to: recipientUsername,
+    });
+  };
+  //
   async postData() {
     this.setState({ loading: true });
     console.log(this.state.inputFile);
@@ -267,10 +286,14 @@ class Homepage extends Component {
             </Col>
           </Row>
         </Container>
-        <MessageBar liveConnections={this.state.users} />
+        <MessageBar
+          liveConnections={this.state.users}
+          sendMessageFn={this.sendMessage}
+          msgs={this.state.msgs}
+        />
       </>
     );
   }
 }
 
-export default connect(null, mapDispatchToProps)(Homepage);
+export default connect(mapStateToProps, mapDispatchToProps)(Homepage);
