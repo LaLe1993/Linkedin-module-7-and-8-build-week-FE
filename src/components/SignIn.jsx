@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Container, Row, Col, Button, Form } from "react-bootstrap";
 import axios from "axios";
 import { createBrowserHistory } from "history";
+import { Link } from "react-router-dom";
 
 export default class signin extends Component {
   state = {
@@ -18,7 +19,7 @@ export default class signin extends Component {
   async fetchUsers() {
     let gets = {
       method: "GET",
-      url: "https://striveschool.herokuapp.com/api/profile/",
+      url: "http://localhost:3003/profile",
       headers: {
         Authorization: "Basic " + btoa("user7:3UU5dYFvenRuRP7E"),
       },
@@ -32,7 +33,7 @@ export default class signin extends Component {
       email: this.state.username,
       password: this.state.password,
     };
-    let response = await fetch("http://localhost:3333/user/signIn", {
+    let response = await fetch("http://localhost:3003/user/signIn", {
       method: "POST",
       credentials: "include",
       body: JSON.stringify(userInfo),
@@ -117,7 +118,8 @@ export default class signin extends Component {
             <div className="mt-5">
               <a>Forgot Your Password ?</a>
               <p className="mt-3">
-                New to LinkedIn? <a>Join now.</a>
+                New to LinkedIn? <a>
+                <Link to={`/signUp`} activeClassName="active">Join now.</Link></a>
               </p>
             </div>
           </Col>

@@ -42,7 +42,7 @@ class Homepage extends Component {
     //fetch posts
     this.fetchData();
     // fetch user info
-    let response = await fetch("http://localhost:3333/user", {
+    let response = await fetch("http://localhost:3003/user", {
       method: "GET",
       credentials: "include",
     });
@@ -80,7 +80,7 @@ class Homepage extends Component {
     let postData = {
       method: "POST",
       // url: `https://be-linkedin.herokuapp.com/posts`,
-      url: `http://localhost:3333/posts`,
+      url: `http://localhost:3003/posts`,
       headers: {
         Authorization: "Basic " + btoa("user7:3UU5dYFvenRuRP7E"),
         user: "user1",
@@ -92,7 +92,7 @@ class Homepage extends Component {
 
     let inputFile = {
       method: "POST",
-      url: await `http://localhost:3333/posts/${data.data}`,
+      url: await `http://localhost:3003/posts/${data.data}`,
       // url: await `https://be-linkedin.herokuapp.com/posts/${data.data}`,
       headers: {
         Authorization: "Basic " + btoa("user7:3UU5dYFvenRuRP7E"),
@@ -110,7 +110,7 @@ class Homepage extends Component {
     console.log(this.props.match.params.id);
     let response = {
       method: "GET",
-      url: await `http://localhost:3333/posts`,
+      url: await `http://localhost:3003/posts`,
       //  url: `https://be-linkedin.herokuapp.com/posts`,
       headers: {
         Authorization: "Basic " + btoa("user7:3UU5dYFvenRuRP7E"),
@@ -137,7 +137,7 @@ class Homepage extends Component {
     const postText = {
       method: "PUT",
       // url: `https://be-linkedin.herokuapp.com/posts/${id}`,
-      url: `http://localhost:3333/posts/${id}`,
+      url: `http://localhost:3003/posts/${id}`,
       headers: {
         Authorization: "Basic " + btoa("user7:3UU5dYFvenRuRP7E"),
       },
@@ -163,7 +163,7 @@ class Homepage extends Component {
   //
   deletePost = async (id) => {
     this.setState({ loading: true });
-    let response = await fetch(`http://localhost:3333/posts/${id}`, {
+    let response = await fetch(`http://localhost:3003/posts/${id}`, {
       method: "DELETE",
       headers: new Headers({
         Authorization: "Basic " + btoa("user7:3UU5dYFvenRuRP7E"),

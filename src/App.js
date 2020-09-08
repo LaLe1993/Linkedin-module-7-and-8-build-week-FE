@@ -3,6 +3,7 @@ import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Profile from "./components/Profile/Profile";
 import Signin from "./components/SignIn";
+import SignUp from "./components/SignUp"
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import MyNetwork from "./components/Network/MyNetwork";
 import ExperienceSubmitionForm from "./components/Network/ExperienceSubmitionForm";
@@ -18,6 +19,7 @@ function App() {
           <Route exact path="/" component={Signin} />
           <Route path="/profile/:id" component={Profile} />
           <Route path="/myNetwork" component={MyNetwork} />
+          <Route path="/SignUp" component={SignUp} />
           <Route
             exact
             path="/addExperience"

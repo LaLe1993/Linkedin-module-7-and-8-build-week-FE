@@ -17,7 +17,7 @@ export default class homeprofile extends Component {
     return btoa(binstr);
   }
   componentDidMount = async () => {
-    let response = await fetch("http://localhost:3333/profile/user1", {
+    let response = await fetch("http://localhost:3003/profile/user1", {
       method: "GET",
       headers: new Headers({
         Authorization: "Basic " + btoa("user7:3UU5dYFvenRuRP7E"),
