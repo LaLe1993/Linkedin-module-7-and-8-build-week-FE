@@ -45,7 +45,7 @@ class Homepage extends Component {
     //fetch posts
     this.fetchData();
     // fetch user info
-    let response = await fetch("http://localhost:3003/user", {
+    let response = await fetch("http://localhost:3003/user/me", {
       method: "GET",
       credentials: "include",
     });
@@ -162,18 +162,7 @@ class Homepage extends Component {
       },
       data: { text: content },
     };
-    /*
-    const postFile = {
-      method: "POST",
-      url: `https://be-linkedin.herokuapp.com/posts/${id}`,
-      headers: {
-        Authorization: "Basic " + btoa("user7:3UU5dYFvenRuRP7E"),
-        user: "user2",
-      },
-      data: this.state.file,
-    };
-    let file = await axios(postFile);
-    */
+
     let text = await axios(postText);
     this.fetchData();
     alert("updated");

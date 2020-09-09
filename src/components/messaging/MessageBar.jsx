@@ -36,28 +36,40 @@ export class MessageBar extends Component {
     return btoa(binstr);
   }
   componentDidMount = async () => {
-    let response = await fetch(`http://localhost:3003/profile`, {
+    let response = await fetch(`http://localhost:3003/user`, {
       method: "GET",
+      credentials: "include",
       headers: new Headers({
-        Authorization: "Basic dXNlcjE4OlEyejVWN2hFRlU2SktSckU=",
         "Content-type": "application/json",
       }),
     });
     let parsedJson = await response.json();
+    console.log(parsedJson);
+    /*
     parsedJson.forEach((element) => {
       const base64 = this.bufferToBase64(element.image.data);
       element.image = base64;
     });
     console.log(this.props.user.username);
-    let filteredConnections = parsedJson.filter(
-      (user) => user.username !== this.props.user.username
-    );
+    */
+
     setTimeout(() => {
+      let filteredConnections = parsedJson.filter(
+        (element) => element.username !== this.props.user.username
+      );
+      let filteredMessages = this.props.msgs.filter(
+        (msg) =>
+          (msg.from === this.state.recipientUsername &&
+            msg.to === this.state.senderUsername) ||
+          (msg.from === this.state.senderUsername &&
+            msg.to === this.state.recipientUsername)
+      );
+      console.log(filteredMessages);
       this.setState({
         liveConnections: this.props.liveConnections,
-        connections: filteredConnections,
         senderUsername: this.props.user.username,
         messages: this.props.msgs,
+        connections: filteredConnections,
       });
     }, 1000);
   };
@@ -68,7 +80,15 @@ export class MessageBar extends Component {
       this.setState({ liveConnections: this.props.liveConnections });
     }
     if (prevProps.msgs.length !== this.props.msgs.length) {
-      this.setState({ messages: this.props.msgs });
+      let filteredMessages = this.props.msgs.filter(
+        (msg) =>
+          (msg.from === this.state.recipientUsername &&
+            msg.to === this.state.senderUsername) ||
+          (msg.from === this.state.senderUsername &&
+            msg.to === this.state.recipientUsername)
+      );
+      console.log(filteredMessages);
+      this.setState({ messages: filteredMessages });
     }
   };
 
@@ -84,7 +104,19 @@ export class MessageBar extends Component {
       showChatbox: true,
       recipientName: user.name,
       recipientUsername: user.username,
+      messages: [],
     });
+
+    setTimeout(() => {
+      let filteredMessages = this.props.msgs.filter(
+        (msg) =>
+          (msg.from === this.state.recipientUsername &&
+            msg.to === this.state.senderUsername) ||
+          (msg.from === this.state.senderUsername &&
+            msg.to === this.state.recipientUsername)
+      );
+      this.setState({ messages: filteredMessages });
+    }, 500);
   };
   closeChatbox = () => {
     this.setState({ showChatbox: false, recipientName: "" });
@@ -157,15 +189,33 @@ export class MessageBar extends Component {
               <div id="messages">
                 {this.state.messages.map((message) => {
                   return (
-                    <p
-                      className={
-                        message.from === this.state.senderUsername
-                          ? "textright"
-                          : "textleft"
-                      }
-                    >
-                      {message.text}
-                    </p>
+                    <>
+                      {/*
+                      {((message.from === this.state.recipientUsername &&
+                        message.to === this.state.senderUsername) ||
+                        (message.from === this.state.senderUsername &&
+                          message.to === this.state.recipientUsername)) && (
+                        <p
+                          className={
+                            message.from === this.state.senderUsername
+                              ? "textright"
+                              : "textleft"
+                          }
+                        >
+                          {message.text}
+                        </p>
+                      )}
+                        */}
+                      <p
+                        className={
+                          message.from === this.state.senderUsername
+                            ? "textright"
+                            : "textleft"
+                        }
+                      >
+                        {message.text}
+                      </p>
+                    </>
                   );
                 })}
               </div>
