@@ -8,7 +8,7 @@
   display: flex;
   justify-content: space-between;
   background-color: #283e4a;
-  color: white;
+  color: rgb(255, 255, 255);
   border-radius: 2px;
 }
 #messagebar #icons {
@@ -95,6 +95,7 @@
   bottom: 10px;
   border: 2px solid black;
   border-radius: 20px;
+  background-color: transparent !important;
 }
 #chatbox #chat #input input {
   font-size: 14px;
@@ -125,6 +126,7 @@
 }
 #chatbox #chat #messages p {
   border: 1px solid none;
+  width: 90%;
   border-radius: 10px;
   padding: 2px 10px;
   display: block !important;
@@ -138,4 +140,7 @@
   text-align: left;
   border-top-left-radius: 0px;
   background-color: rgb(187, 192, 194);
+}
+#chatbox #chat #input svg:hover {
+  cursor: pointer;
 }
