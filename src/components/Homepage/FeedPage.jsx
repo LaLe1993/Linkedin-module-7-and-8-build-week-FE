@@ -101,10 +101,10 @@ class Homepage extends Component {
       // url: `https://be-linkedin.herokuapp.com/posts`,
       url: `http://localhost:3003/posts`,
       headers: {
-        Authorization: "Basic " + btoa("user7:3UU5dYFvenRuRP7E"),
-        user: "user1",
+        
       },
       data: data1,
+      withCredentials:true
     };
     let data = await axios(postData);
     console.log(data.data);

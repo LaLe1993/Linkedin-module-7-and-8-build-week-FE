@@ -26,9 +26,9 @@ export default class homeprofile extends Component {
     });
     let parsedJson = await response.json();
     let user = parsedJson[0];
-    const base64 = this.bufferToBase64(user.image.data);
+    // const base64 = this.bufferToBase64(user.image.data);
     console.log(user);
-    this.setState({ image: base64, user });
+    this.setState({ image: user });
   };
   render() {
     return (
@@ -46,13 +46,14 @@ export default class homeprofile extends Component {
             <img
               className="img-fluid rounded-circle first"
               src={`data:image/jpeg;base64,${this.state.image}`}
+              alt=''
             />
             <div
               className=" home p-2 text-center"
               style={{ borderBottom: "0px" }}
             >
               <p className="p1">Welcome, {this.state.user.name}</p>
-              <a className="a1">Update your profile</a>
+              <a href='/' className="a1">Update your profile</a>
             </div>
             <div className="p-2  home" style={{ borderBottom: "0px" }}>
               <p className="p2">Who viewed your profile </p>
