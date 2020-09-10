@@ -92,7 +92,10 @@ class Posts extends Component {
                   <Dropdown.Menu>
                     <Dropdown.Item
                       onClick={() => {
-                        this.setState({ show: !this.state.show });
+                        this.setState({
+                          show: !this.state.show,
+                          text: this.state.posts.text,
+                        });
                       }}
                     >
                       Edit Post
