@@ -11,7 +11,7 @@ import {
   Image,
 } from "react-bootstrap";
 import { FaFacebook, FaLinkedinIn } from 'react-icons/fa';
-import './SignUpStyle.css';
+import '../styles/SignUpStyle.css';
 
 class SignUp extends Component {
   state = {
