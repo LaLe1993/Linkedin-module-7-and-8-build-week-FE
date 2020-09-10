@@ -155,7 +155,7 @@ export class MessageBar extends Component {
                 <div id="connection">
                   <img
                     src={`data:image/jpeg;base64,${connection.image}`}
-                    alt="image"
+                    alt=""
                   />
                   <a onClick={() => this.openChatbox(connection)}>
                     {connection.name}
@@ -215,6 +215,7 @@ export class MessageBar extends Component {
                       >
                         {message.text}
                       </p>
+                      <p id="time">{message.time}</p>
                     </>
                   );
                 })}
