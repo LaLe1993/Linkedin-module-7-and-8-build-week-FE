@@ -139,8 +139,8 @@ class SignUp extends Component {
                     </Col>
                   </FormGroup>
                     <div className='mb-3 d-flex justify-content-between'>
-                      <a href='' style={{width:'49%'}}><Button className='facebook w-100'><FaFacebook className="fab" /> <span className='mt-1'>Facebook</span></Button></a>
-                      <a href='' style={{width:'49%'}}><Button className='linkedin w-100'><FaLinkedinIn className="fab" /> LinkedIn</Button></a>
+                      <a href='http://localhost:3003/user/auth/fbSignIn' style={{width:'49%'}}><Button className='facebook w-100'><FaFacebook className="fab" /> <span className='mt-1'>Facebook</span></Button></a>
+                      <a href='http://localhost:3003/user/auth/LinkedIn' style={{width:'49%'}}><Button className='linkedin w-100'><FaLinkedinIn className="fab" /> LinkedIn</Button></a>
                     </div>
                   <Button block bsSize="large" type="submit" className='signUp'>
                     Sign Up

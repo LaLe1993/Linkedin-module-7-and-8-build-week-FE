@@ -44,7 +44,7 @@ class App extends React.Component {
 
             <Route path="/feed" component={Homepage} />
             <Route exact path="/" component={Signin} />
-            <Route path="/profile/:id" component={Profile} />
+            <Route path="/user/me" component={Profile} />
             <Route path="/myNetwork" component={MyNetwork} />
             <Route path="/SignUp" component={SignUp} />
             <Route

@@ -13,6 +13,9 @@ import { FaCamera, FaPencilAlt, FaEye } from "react-icons/fa";
 import { RiPencilLine } from "react-icons/ri";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { withRouter } from "react-router-dom";
+import { connect } from 'react-redux';
+
+const mapStateToProps =(state)=>state
 export class MainJumbotron extends Component {
   state = {
     data: [],
@@ -113,10 +116,10 @@ export class MainJumbotron extends Component {
             </div>
             <div id="profileSection">
               <div style={{ cursor: "pointer" }}>
-                {this.state.user.image ? (
+                {this.props.user.image ? (
                   <img
                     onClick={this.verifyProfile}
-                    src={`data:image/jpeg;base64,${this.state.user.image}`}
+                    src={`data:image/jpeg;base64,${this.props.user.image}`}
                     alt=""
                   />
                 ) : (
@@ -154,10 +157,10 @@ export class MainJumbotron extends Component {
             <div id="profileInfo">
               <div id="info">
                 <div id="personalInfo">
-                  <p>{this.state.user.name + " " + this.state.user.surname}</p>
-                  <p>{this.state.user.title}</p>
+                  <p>{this.props.user.name + " " + this.props.user.surname}</p>
+                  {/* <p>{this.state.user.title}</p> */}
                   <p>
-                    {this.state.user.area} -<span> 51 connections </span>-
+                    <span> 51 connections </span>-
                     <span> Contact info </span>
                   </p>
                 </div>
@@ -245,4 +248,4 @@ export class MainJumbotron extends Component {
   }
 }
 
-export default withRouter(MainJumbotron);
+export default  connect(mapStateToProps)(withRouter(MainJumbotron));

@@ -30,9 +30,10 @@ class Profile extends Component {
   }
   componentDidMount = async () => {
     let response = await fetch(
-      `https://be-linkedin.herokuapp.com/profile/${this.state.username}`,
+      `http://localhost:3003/user/me`,
       {
         method: "GET",
+        credentials: 'include',
         headers: new Headers({
           Authorization: "Basic " + btoa("user7:3UU5dYFvenRuRP7E"),
           "Content-type": "application/json",
@@ -40,9 +41,9 @@ class Profile extends Component {
       }
     );
     let parsedJson = await response.json();
-    this.setState({ name: parsedJson.username });
-    console.log(parsedJson);
-    this.fetchExperience();
+    this.setState({ name: parsedJson.username, loading: false });
+    console.log("User info: ",parsedJson);
+    // this.fetchExperience();
   };
   componentDidUpdate = async (prevState) => {
     if (this.props.match.params.id !== this.state.username) {
