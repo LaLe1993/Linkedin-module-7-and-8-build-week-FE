@@ -1,0 +1,31 @@
+.fab {
+    margin-right: 7px;
+    margin-bottom: 3px;
+    font-size: 15px;
+}
+
+.linkedin, .facebook, .signUp {
+    font-family: circular-spotify-ui,Helvetica Neue,Helvetica,Arial,sans-serif;
+    font-size: 15px; 
+    font-weight: 700;
+}  
+
+.facebook{
+    background-color: #3e5a9b;
+    border-color: #3e5a9b;
+}
+
+.linkedin{
+    background-color: #0073b1;
+    border-color: #0073b1;
+}
+
+.signUp{
+    background-color: #cfdafc;
+    color: #3b3b3b;
+    border-color: #0073b1;
+}
+
+.signUpPage{
+    background-image: linear-gradient(to right, #0378ac , #0b869a);
+}
