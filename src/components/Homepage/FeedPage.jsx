@@ -50,9 +50,14 @@ class Homepage extends Component {
       credentials: "include",
     });
     let parsedResponse = await response.json();
+    let msgResponse = await fetch("http://localhost:3003/messages");
+    let parsedMsgsResponse = await msgResponse.json();
     console.log("user", parsedResponse);
     this.props.loadUser(parsedResponse);
-    this.setState({ username: this.props.user.username });
+    this.setState({
+      username: this.props.user.username,
+      msgs: parsedMsgsResponse,
+    });
     //scket connection
     const connOpt = {
       transports: ["websocket"],
@@ -84,11 +89,44 @@ class Homepage extends Component {
       .join("");
     return btoa(binstr);
   }
-  sendMessage = (recipientUsername, message) => {
+  sendMessage = async (recipientUsername, message) => {
+    const monthNames = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December",
+    ];
+    let today = new Date();
+    let date = today.getDate() + " " + monthNames[today.getMonth() + 1];
+    let time = today.getHours() + ":" + today.getMinutes();
+    let now = date + " " + time;
+    console.log(typeof now);
+    let payload = {
+      from: this.props.user.username,
+      text: message,
+      to: recipientUsername,
+      time: now,
+    };
+    let response = await fetch("http://localhost:3003/messages", {
+      method: "POST",
+      body: JSON.stringify(payload),
+      headers: new Headers({
+        "Content-Type": "application/json",
+      }),
+    });
     this.socket.emit("chatmessage", {
       from: this.props.user.username,
       text: message,
       to: recipientUsername,
+      time: now,
     });
   };
   //
@@ -100,11 +138,9 @@ class Homepage extends Component {
       method: "POST",
       // url: `https://be-linkedin.herokuapp.com/posts`,
       url: `http://localhost:3003/posts`,
-      headers: {
-        
-      },
+      headers: {},
       data: data1,
-      withCredentials:true
+      withCredentials: true,
     };
     let data = await axios(postData);
     console.log(data.data);
