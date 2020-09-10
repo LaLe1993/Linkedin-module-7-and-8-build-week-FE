@@ -27,24 +27,28 @@ class Posts extends Component {
   async editPost() {
     const postText = {
       method: "PUT",
-      url: `http://localhost:3333/posts/${this.state.posts._id}`,
+      url: `http://localhost:3003/posts/${this.state.posts._id}`,
       headers: {
         Authorization: "Basic " + btoa("user7:3UU5dYFvenRuRP7E"),
       },
       data: { text: this.state.text },
     };
-
-    const postFile = {
-      method: "POST",
-      url: `http://localhost:3333/posts/${this.state.posts._id}`,
-      headers: {
-        Authorization: "Basic " + btoa("user7:3UU5dYFvenRuRP7E"),
-        user: "user2",
-      },
-      data: this.state.file,
-    };
     let text = await axios(postText);
-    let file = await axios(postFile);
+    if (this.state.file !== null) {
+      const postFile = {
+        method: "POST",
+        url: `http://localhost:3003/posts/${this.state.posts._id}`,
+        headers: {
+          Authorization: "Basic " + btoa("user7:3UU5dYFvenRuRP7E"),
+        },
+        data: this.state.file,
+      };
+      let file = await axios(postFile);
+    }
+    setTimeout(() => {
+      this.props.editTweak();
+    }, 100);
+    // this.props.fetch();
   }
   handleLikes = () => {
     let prevCount = this.state.count;
@@ -146,7 +150,7 @@ class Posts extends Component {
                         <Form.File
                           onChange={(event) => {
                             const formData = new FormData();
-                            formData.append("post", event.target.files[0]);
+                            formData.append("image", event.target.files[0]);
                             this.setState({ file: formData });
                           }}
                         />
@@ -157,12 +161,7 @@ class Posts extends Component {
                     <Button
                       variant="primary"
                       onClick={() =>
-                        this.setState({ show: false }, () =>
-                          this.props.editPost(
-                            this.state.posts._id,
-                            this.state.text
-                          )
-                        )
+                        this.setState({ show: false }, () => this.editPost())
                       }
                     >
                       Update

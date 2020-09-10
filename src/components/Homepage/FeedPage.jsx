@@ -144,25 +144,26 @@ class Homepage extends Component {
     };
     let data = await axios(postData);
     console.log(data.data);
-
-    let inputFile = {
-      method: "POST",
-      url: await `http://localhost:3003/posts/${data.data}`,
-      // url: await `https://be-linkedin.herokuapp.com/posts/${data.data}`,
-      headers: {
-        Authorization: "Basic " + btoa("user7:3UU5dYFvenRuRP7E"),
-        "Access-Control-Allow-Origin": "http://127.0.0.1:3000/",
-      },
-      data: this.state.inputFile,
-    };
-    let input = await axios(inputFile);
+    if (this.state.inputFile !== null) {
+      let inputFile = {
+        method: "POST",
+        url: await `http://localhost:3003/posts/${data.data}`,
+        // url: await `https://be-linkedin.herokuapp.com/posts/${data.data}`,
+        headers: {
+          Authorization: "Basic " + btoa("user7:3UU5dYFvenRuRP7E"),
+          "Access-Control-Allow-Origin": "http://127.0.0.1:3000/",
+        },
+        data: this.state.inputFile,
+      };
+      let input = await axios(inputFile);
+    }
 
     this.fetchData();
     alert("Post has been posted");
   }
 
   async fetchData() {
-    console.log(this.props.match.params.id);
+    this.setState({ posts: [], loading: true });
     let response = {
       method: "GET",
       url: await `http://localhost:3003/posts`,
@@ -173,7 +174,6 @@ class Homepage extends Component {
     };
     let Posts = await axios(response);
     let postsData = Posts.data;
-    console.log(postsData);
     postsData.forEach((post) => {
       if (post.image) {
         const postbase64 = this.bufferToBase64(post.image.data);
@@ -184,9 +184,10 @@ class Homepage extends Component {
         post.user.image = profilebase64;
       }
     });
+    console.log(postsData);
     this.setState({ posts: postsData.reverse(), loading: false });
   }
-  //
+  /*
   editPost = async (id, content) => {
     this.setState({ loading: true });
     const postText = {
@@ -200,10 +201,24 @@ class Homepage extends Component {
     };
 
     let text = await axios(postText);
+    // console.log
+    let inputFile = {
+      method: "POST",
+      url: await `http://localhost:3003/posts/${text.data}`,
+      // url: await `https://be-linkedin.herokuapp.com/posts/${data.data}`,
+      headers: {
+        Authorization: "Basic " + btoa("user7:3UU5dYFvenRuRP7E"),
+        "Access-Control-Allow-Origin": "http://127.0.0.1:3000/",
+      },
+      data: this.state.inputFile,
+    };
+    let input = await axios(inputFile);
+
+    //
     this.fetchData();
     alert("updated");
   };
-
+*/
   //
   deletePost = async (id) => {
     this.setState({ loading: true });
@@ -218,7 +233,10 @@ class Homepage extends Component {
       // alert("Post deleted Sucessfully");
     }
   };
-
+  refresh = async () => {
+    console.log("hereeee");
+    this.fetchData();
+  };
   render() {
     return (
       <>
@@ -276,7 +294,7 @@ class Homepage extends Component {
                     <Posts
                       user={this.state.username}
                       delPost={this.deletePost}
-                      editPost={this.editPost}
+                      editTweak={this.refresh}
                       post={element}
                       key={i}
                     />
