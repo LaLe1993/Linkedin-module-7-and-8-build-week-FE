@@ -4,6 +4,7 @@ export default function (state = {}, action) {
       return {
         ...state,
         user: action.payload,
+        loggedIn: true,
       };
 
     default:

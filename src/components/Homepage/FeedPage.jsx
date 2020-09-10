@@ -329,6 +329,7 @@ class Homepage extends Component {
             </Col>
           </Row>
         </Container>
+
         <MessageBar
           liveConnections={this.state.users}
           sendMessageFn={this.sendMessage}

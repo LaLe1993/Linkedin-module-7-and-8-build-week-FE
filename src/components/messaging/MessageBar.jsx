@@ -8,7 +8,7 @@ import { GoPrimitiveDot } from "react-icons/go";
 import { connect } from "react-redux";
 
 const mapStateToProps = (state) => state;
-export class MessageBar extends Component {
+class MessageBar extends Component {
   socket = null;
   constructor(props) {
     super(props);
