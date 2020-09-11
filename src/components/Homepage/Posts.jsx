@@ -60,10 +60,15 @@ class Posts extends Component {
       <Container className="mt-2 home px-0 forPostsShadow">
         <div className="p-1" id="postHeader">
           <div>
-            <img
-              src={`data:image/jpeg;base64,${this.state.posts.user.image}`}
-              alt=""
-            />
+            {this.state.posts.user.image ? (
+              <img
+                src={`data:image/jpeg;base64,${this.state.posts.user.image}`}
+                alt=""
+              />
+            ) : (
+              <img src={this.state.posts.user.linkedInImage} alt="" />
+            )}
+
             <div>
               <p>
                 <Link
@@ -248,6 +253,7 @@ class Posts extends Component {
               <p>Share</p>
             </div>
           </div>
+
           {this.state.showComments ? (
             <Comments id={this.state.posts._id} />
           ) : null}

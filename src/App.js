@@ -10,6 +10,7 @@ import ExperienceSubmitionForm from "./components/Network/ExperienceSubmitionFor
 import Homepage from "./components/Homepage/FeedPage";
 import { connect } from "react-redux";
 import MessageBar from "./components/messaging/MessageBar.jsx";
+import io from "socket.io-client";
 
 const mapStateToProps = (state) => state;
 class App extends React.Component {
@@ -19,6 +20,7 @@ class App extends React.Component {
     this.state = {
       msgs: [],
       users: [],
+      username: "",
     };
   }
 
@@ -27,8 +29,10 @@ class App extends React.Component {
       <>
         <Router>
           <Switch>
-            {/* <Route path='/feed/:id' component={Homepage}/>
-            {this.props.loggedIn && (
+            {/* <Route path='/feed/:id' component={Homepage}/> */}
+            <Route exact path="/" component={Signin} />
+            <Route path="/feed" component={Homepage} />
+            {/*  {this.props.loggedIn && (
               <Route
                 path="/"
                 render={() => (
@@ -39,11 +43,8 @@ class App extends React.Component {
                   />
                 )}
               />
-            )}
-            */}
+            )} */}
 
-            <Route path="/feed" component={Homepage} />
-            <Route exact path="/" component={Signin} />
             <Route path="/user/me" component={Profile} />
             <Route path="/myNetwork" component={MyNetwork} />
             <Route path="/SignUp" component={SignUp} />

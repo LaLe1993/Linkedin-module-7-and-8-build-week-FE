@@ -153,10 +153,15 @@ class MessageBar extends Component {
             {this.state.connections.map((connection) => {
               return (
                 <div id="connection">
-                  <img
-                    src={`data:image/jpeg;base64,${connection.image}`}
-                    alt=""
-                  />
+                  {connection.image ? (
+                    <img
+                      src={`data:image/jpeg;base64,${connection.image}`}
+                      alt=""
+                    />
+                  ) : (
+                    <img src={connection.linkedInImage} alt="" />
+                  )}
+
                   <a onClick={() => this.openChatbox(connection)}>
                     {connection.name}
                   </a>

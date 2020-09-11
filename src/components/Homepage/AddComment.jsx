@@ -2,6 +2,9 @@ import React, { Component } from "react";
 import { Container } from "react-bootstrap";
 import { MdSend } from "react-icons/md";
 import { IconContext } from "react-icons";
+import { connect } from "react-redux";
+
+const mapStateToProps = (state) => state;
 export class AddComment extends Component {
   state = {
     user: [],
@@ -65,7 +68,14 @@ export class AddComment extends Component {
     return (
       <Container id="comment" className="mt-2">
         <div id="commentImage">
-          <img src={`data:image/jpeg;base64,${this.state.user.image}`} alt="" />
+          {this.props.user.linkedInImage ? (
+            <img src={this.props.user.linkedInImage} alt="" />
+          ) : (
+            <img
+              src={`data:image/jpeg;base64,${this.props.user.image}`}
+              alt=""
+            />
+          )}
         </div>
         <div id="content">
           <input type="text" id="comment" onChange={this.updateComment} />
@@ -80,4 +90,4 @@ export class AddComment extends Component {
   }
 }
 
-export default AddComment;
+export default connect(mapStateToProps)(AddComment);

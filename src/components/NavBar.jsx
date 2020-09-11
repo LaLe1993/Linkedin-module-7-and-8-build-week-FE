@@ -21,14 +21,21 @@ import photo from "../images/photo.png";
 import { BsGrid3X3GapFill } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import usersData from "./HOC/FetchUsers";
+import { connect } from "react-redux";
+
+const mapStateToProps = (state) => state;
 
 class NavBar extends Component {
-  state = {
-    search: "",
-    users: [],
-    show: false,
-    image: "",
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      search: "",
+      users: [],
+      show: false,
+      image: "",
+    };
+  }
   bufferToBase64(buf) {
     var binstr = Array.prototype.map
       .call(buf, function (ch) {
@@ -37,7 +44,10 @@ class NavBar extends Component {
       .join("");
     return btoa(binstr);
   }
-
+  componentDidMount = async () => {
+    console.log(this.props.user);
+  };
+  /*
   componentDidMount = async () => {
     this.setState({ users: this.props.users });
     let response = await fetch(
@@ -55,6 +65,7 @@ class NavBar extends Component {
     const base64 = this.bufferToBase64(parsedJson[0].image.data);
     this.setState({ image: base64 });
   };
+  */
   render() {
     return (
       <Navbar
@@ -136,10 +147,20 @@ class NavBar extends Component {
               <div style={{ fontSize: "13px" }}> Notifications</div>
             </Nav.Link>
             <Link className="nav-link" to="/user/me">
-              <img
-                src={`data:image/jpeg;base64,${this.state.image}`}
-                style={{ borderRadius: "50%", height: "20px", width: "20px" }}
-              ></img>
+              {this.props.user.linkedInImage ? (
+                <img
+                  src={this.props.user.linkedInImage}
+                  style={{ borderRadius: "50%", height: "20px", width: "20px" }}
+                  alt=""
+                />
+              ) : (
+                <img
+                  src={`data:image/jpeg;base64,${this.props.user.image}`}
+                  style={{ borderRadius: "50%", height: "20px", width: "20px" }}
+                  alt=""
+                />
+              )}
+
               <div style={{ fontSize: "13px" }}>
                 Me{" "}
                 <svg
@@ -187,4 +208,4 @@ class NavBar extends Component {
   }
 }
 
-export default usersData(NavBar);
+export default usersData(connect(mapStateToProps)(NavBar));

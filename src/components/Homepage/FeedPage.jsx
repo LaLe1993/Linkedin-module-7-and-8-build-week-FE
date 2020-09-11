@@ -58,7 +58,9 @@ class Homepage extends Component {
       username: this.props.user.username,
       msgs: parsedMsgsResponse,
     });
+
     //scket connection
+
     const connOpt = {
       transports: ["websocket"],
     };
@@ -159,7 +161,6 @@ class Homepage extends Component {
     }
 
     this.fetchData();
-    alert("Post has been posted");
   }
 
   async fetchData() {
@@ -174,15 +175,20 @@ class Homepage extends Component {
     };
     let Posts = await axios(response);
     let postsData = Posts.data;
+    console.log(postsData);
     postsData.forEach((post) => {
       if (post.image) {
+        console.log("firstbuffer");
         const postbase64 = this.bufferToBase64(post.image.data);
         post.image = postbase64;
       }
+      /*
       if (post.user.image) {
+        console.log("second");
         const profilebase64 = this.bufferToBase64(post.user.image.data);
         post.user.image = profilebase64;
       }
+      */
     });
     console.log(postsData);
     this.setState({ posts: postsData.reverse(), loading: false });

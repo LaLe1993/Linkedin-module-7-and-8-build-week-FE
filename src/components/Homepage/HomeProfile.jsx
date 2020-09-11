@@ -16,6 +16,7 @@ export default class homeprofile extends Component {
       .join("");
     return btoa(binstr);
   }
+  /*
   componentDidMount = async () => {
     let response = await fetch("http://localhost:3003/profile/user1", {
       method: "GET",
@@ -30,6 +31,7 @@ export default class homeprofile extends Component {
     console.log(user);
     this.setState({ image: user });
   };
+*/
   render() {
     return (
       <div className="leftSidebarShadow">
@@ -46,14 +48,16 @@ export default class homeprofile extends Component {
             <img
               className="img-fluid rounded-circle first"
               src={`data:image/jpeg;base64,${this.state.image}`}
-              alt=''
+              alt=""
             />
             <div
               className=" home p-2 text-center"
               style={{ borderBottom: "0px" }}
             >
               <p className="p1">Welcome, {this.state.user.name}</p>
-              <a href='/' className="a1">Update your profile</a>
+              <a href="/" className="a1">
+                Update your profile
+              </a>
             </div>
             <div className="p-2  home" style={{ borderBottom: "0px" }}>
               <p className="p2">Who viewed your profile </p>

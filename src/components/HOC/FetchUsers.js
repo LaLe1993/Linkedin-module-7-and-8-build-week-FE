@@ -12,10 +12,9 @@ function userData(WrappedComponent) {
     async fetchUsers() {
       let usersData = {
         method: "GET",
-        url: `https://be-linkedin.herokuapp.com/profile`,
-        headers: {
-          Authorization: "Basic " + btoa("user7:3UU5dYFvenRuRP7E"),
-        },
+        url: `http://localhost:3003/user`,
+        headers: {},
+        withCredentials: true,
       };
       let users = await axios(usersData);
       this.setState({ users: users.data }, () => console.log(this.state.users));

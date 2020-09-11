@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { Container, Dropdown } from "react-bootstrap";
 import { BsThreeDots } from "react-icons/bs";
+import { connect } from "react-redux";
 
+const mapStateToProps = (state) => state;
 export class Comment extends Component {
   constructor(props) {
     super(props);
@@ -19,7 +21,7 @@ export class Comment extends Component {
   }
   componentDidMount = async () => {
     let response = await fetch(
-      `http://localhost:3333/profile/${this.props.info.username}`,
+      `http://localhost:3003/profile/${this.props.info.username}`,
       {
         method: "GET",
         headers: new Headers({
@@ -35,12 +37,9 @@ export class Comment extends Component {
     this.setState({ userInfo });
   };
   deleteComment = async (id) => {
-    let response = await fetch(
-      `https://be-linkedin.herokuapp.com/comments/${id}`,
-      {
-        method: "DELETE",
-      }
-    );
+    let response = await fetch(`http://localhost:3003/comments/${id}`, {
+      method: "DELETE",
+    });
     if (response.ok) {
       alert("comment deleted");
     }
@@ -49,10 +48,15 @@ export class Comment extends Component {
     return (
       <Container id="comment" className="mt-2">
         <div id="commentImage">
-          <img
-            src={`data:image/jpeg;base64,${this.state.userInfo.image}`}
-            alt=""
-          />
+          {console.log("comment", this.props.user.linkedInImage)}
+          {this.props.user.linkedInImage ? (
+            <img src={this.props.user.linkedInImage} alt="" />
+          ) : (
+            <img
+              src={`data:image/jpeg;base64,${this.props.user.image}`}
+              alt=""
+            />
+          )}
         </div>
         <div>
           <div id="commentHeader">
@@ -81,4 +85,4 @@ export class Comment extends Component {
   }
 }
 
-export default Comment;
+export default connect(mapStateToProps)(Comment);
