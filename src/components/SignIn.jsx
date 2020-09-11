@@ -33,7 +33,7 @@ export default class signin extends Component {
       email: this.state.username,
       password: this.state.password,
     };
-    let response = await fetch("http://localhost:3003/user/signIn", {
+    let response = await fetch("https://linkedinteambe.herokuapp.com/user/signIn", {
       method: "POST",
       credentials: "include",
       body: JSON.stringify(userInfo),

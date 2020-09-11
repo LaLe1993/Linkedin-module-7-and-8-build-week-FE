@@ -12,7 +12,7 @@ import { GrLinkedin } from "react-icons/gr";
 import {
   AiOutlineHome,
   AiOutlineTeam,
-  AiOutlinePlaySquare,
+  AiOutlineLogout,
 } from "react-icons/ai";
 import { RiBriefcaseLine } from "react-icons/ri";
 import { MdMessage } from "react-icons/md";
@@ -197,10 +197,10 @@ class NavBar extends Component {
                 </svg>
               </div>
             </Nav.Link>
-            <Nav.Link className="navIcon" href="#learning">
-              <AiOutlinePlaySquare style={{ fontSize: "20px" }} />
-              <div style={{ fontSize: "13px" }}>Learning</div>
-            </Nav.Link>
+            <Link className="navIcon nav-link" to="/">
+              <AiOutlineLogout style={{ fontSize: "20px" }} />
+              <div style={{ fontSize: "13px" }}>Sign Out</div>
+            </Link>
           </Nav>
         </Container>
       </Navbar>
