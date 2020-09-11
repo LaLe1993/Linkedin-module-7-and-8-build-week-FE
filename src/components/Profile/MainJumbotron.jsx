@@ -125,7 +125,7 @@ export class MainJumbotron extends Component {
                 ) : (
                   <img
                     onClick={this.verifyProfile}
-                    src="https://capenetworks.com/static/images/testimonials/user-icon.svg"
+                    src={this.props.user.linkedInImage}
                     alt=""
                   />
                 )}
