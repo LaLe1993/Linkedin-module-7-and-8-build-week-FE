@@ -31,7 +31,7 @@ class SignUp extends Component {
 
   addNewUser = async (e) => {
     e.preventDefault();
-    const resp = await fetch("http://localhost:3003/user/signUp", {
+    const resp = await fetch("https://linkedinteamfe.herokuapp.com//user/signUp", {
       method: "POST",
       body: JSON.stringify(this.state.newUser),
       headers: {
